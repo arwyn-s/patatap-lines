@@ -3,12 +3,41 @@
 
 <head>
     <!--metadata goes in head-->
-    <title> Circles</title>
+    <title> Patatap-Clone</title>
 	<script type="text/javascript" src="paper-full.js"></script>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/1.1.28/howler.js"></script>
 	<link rel="stylesheet" type="text/css" href="style.css">
 
 	<script type="text/paperscript" canvas="myCanvas">
+		var maxPoint = new Point(window.innerWidth, window.innerHeight);
+		var rect = new Rectangle(new Point(0,0), maxPoint);
+		var side = 0;
+		var lines =[];
+		function onKeyDown(event) {
+			var start = Math.random();
+			var dest = Math.random();
+			if(side===0 ){
+				var beginPoint= new Point(0, start*window.innerHeight);
+				var finalPoint= new Point(window.innerWidth, dest*window.innerHeight);
+			} else {
+				var beginPoint= new Point(start*window.innerWidth, 0);
+				var finalPoint= new Point(dest*window.innerWidth, window.innerHeight);
+			}
+		
+			var myPath = new Path();
+			myPath.strokeColor='crimson';
+			myPath.strokeWidth='5';
+			myPath.strokeCap='round';
+			
+			lines.push({
+				source: beginPoint,
+				destination: finalPoint,
+				direction: (finalPoint - beginPoint).normalize(),
+				path: myPath,
+				nextPoint: beginPoint
+			});
+			myPath.add(lines[lines.length-1].source, lines[lines.length-1].destination);
+		}
 
 	</script>
 </head>
