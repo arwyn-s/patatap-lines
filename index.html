@@ -217,7 +217,8 @@
 
 				if(lines[i].nextPoint.isInside(rect)){
 					lines[i].path.add(lines[i].nextPoint);
-					lines[i].nextPoint += (lines[i].direction)*50;
+					lines[i].nextPoint += (lines[i].direction)*30;
+					lines[i].path.strokeColor.hue +=2;
 		
 				} else {
 					lines[i].path.removeSegment(0);
