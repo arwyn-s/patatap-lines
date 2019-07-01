@@ -10,20 +10,22 @@ function onKeyDown(event) {
         var finalPoint= new Point(window.innerWidth, dest*window.innerHeight);
     } else {
         var beginPoint= new Point(start*window.innerWidth, 0);
-        var finalPoint= new Point(dest*window.innerWidth, window.innerWidth);
+        var finalPoint= new Point(dest*window.innerWidth, window.innerHeight);
     }
 
-    var vec = finalPoint - beginPoint;
     var myPath = new Path();
     myPath.strokeColor='crimson';
     myPath.strokeWidth='5';
     myPath.strokeCap='round';
+    
     lines.push({
-        vector : vec.normalize(),   
-        nextPoint: beginPoint,
-        path: myPath
+        source: beginPoint,
+        destination: finalPoint,
+        direction: (finalPoint - beginPoint).normalize(),
+        path: myPath,
+        nextPoint: beginPoint
     });
-
+    myPath.add(lines[lines.length-1].source, lines[lines.length-1].destination);
 }
 function onFrame(event) {
     for(var i=0;i< lines.length;i++){

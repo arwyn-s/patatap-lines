@@ -36,7 +36,25 @@
 				path: myPath,
 				nextPoint: beginPoint
 			});
-			myPath.add(lines[lines.length-1].source, lines[lines.length-1].destination);
+			//myPath.add(lines[lines.length-1].source, lines[lines.length-1].destination);
+		}
+		function onFrame(event) {
+			for(var i=0;i< lines.length;i++){
+
+				if(lines[i].nextPoint.isInside(rect)){
+					lines[i].path.add(lines[i].nextPoint);
+					lines[i].nextPoint += (lines[i].direction)*50;
+		
+				} else {
+					lines[i].path.removeSegment(0);
+					if(lines[i].path.length < 5){
+						//console.log("removed");
+						//lines
+						lines.splice(i,1);
+					}
+				} 
+
+			}	
 		}
 
 	</script>
