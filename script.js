@@ -14,10 +14,10 @@ function onKeyDown(event) {
     }
 
     var myPath = new Path();
-    myPath.strokeColor='crimson';
+    myPath.strokeColor= keyData[event.key].color;
     myPath.strokeWidth='5';
     myPath.strokeCap='round';
-    
+    keyData[event.key].sound.play();
     lines.push({
         source: beginPoint,
         destination: finalPoint,
@@ -33,6 +33,7 @@ function onFrame(event) {
         if(lines[i].nextPoint.isInside(rect)){
             lines[i].path.add(lines[i].nextPoint);
             lines[i].nextPoint += (lines[i].vector)*100;
+            lines[i].path.strokeColor.hue +=1;
 
         } else if(lines[i].length > 5){
             lines[i].path.removeSegment(0);

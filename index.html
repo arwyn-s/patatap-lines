@@ -9,34 +9,208 @@
 	<link rel="stylesheet" type="text/css" href="style.css">
 
 	<script type="text/paperscript" canvas="myCanvas">
+		var keyData = {
+			q: {
+				sound: new Howl({
+		  		urls: ['sounds/bubbles.mp3']
+				}),
+				color: '#1abc9c'
+			},
+			w: {
+				sound: new Howl({
+		  		urls: ['sounds/clay.mp3']
+				}),
+				color: '#2ecc71'
+			},
+			e: {
+				sound: new Howl({
+		  		urls: ['sounds/confetti.mp3']
+				}),
+				color: '#3498db'
+			},
+			r: {
+				sound: new Howl({
+		  		urls: ['sounds/corona.mp3']
+				}),
+				color: '#9b59b6'
+			},
+				t: {
+				sound: new Howl({
+		  		urls: ['sounds/dotted-spiral.mp3']
+				}),
+				color: '#34495e'
+			},
+			y: {
+				sound: new Howl({
+		  		urls: ['sounds/flash-1.mp3']
+				}),
+				color: '#16a085'
+			},
+			u: {
+				sound: new Howl({
+		  		urls: ['sounds/flash-2.mp3']
+				}),
+				color: '#27ae60'
+			},
+			i: {
+				sound: new Howl({
+		  		urls: ['sounds/flash-3.mp3']
+				}),
+				color: '#2980b9'
+			},
+			o: {
+				sound: new Howl({
+					urls: ['sounds/glimmer.mp3']
+				}),
+				color: '#8e44ad'
+			},
+			p: {
+				sound: new Howl({
+		  		urls: ['sounds/moon.mp3']
+				}),
+				color: '#2c3e50'
+			},
+			a: {
+				sound: new Howl({
+		  		urls: ['sounds/pinwheel.mp3']
+				}),
+				color: '#f1c40f'
+			},
+			s: {
+				sound: new Howl({
+		  		urls: ['sounds/piston-1.mp3']
+				}),
+				color: '#e67e22'
+			},
+				d: {
+				sound: new Howl({
+		  		urls: ['sounds/piston-2.mp3']
+				}),
+				color: '#e74c3c'
+			},
+			f: {
+				sound: new Howl({
+		  		urls: ['sounds/prism-1.mp3']
+				}),
+				color: '#95a5a6'
+			},
+			g: {
+				sound: new Howl({
+		  		urls: ['sounds/prism-2.mp3']
+				}),
+				color: '#f39c12'
+			},
+			h: {
+				sound: new Howl({
+		  		urls: ['sounds/prism-3.mp3']
+				}),
+				color: '#d35400'
+			},
+			j: {
+				sound: new Howl({
+		  		urls: ['sounds/splits.mp3']
+				}),
+				color: '#1abc9c'
+			},
+			k: {
+				sound: new Howl({
+		  		urls: ['sounds/squiggle.mp3']
+				}),
+				color: '#2ecc71'
+			},
+			l: {
+				sound: new Howl({
+		  		urls: ['sounds/strike.mp3']
+				}),
+				color: '#3498db'
+			},
+			z: {
+				sound: new Howl({
+		  		urls: ['sounds/suspension.mp3']
+				}),
+				color: '#9b59b6'
+			},
+			x: {
+				sound: new Howl({
+		  		urls: ['sounds/timer.mp3']
+				}),
+				color: '#34495e'
+			},
+			c: {
+				sound: new Howl({
+		  		urls: ['sounds/ufo.mp3']
+				}),
+				color: '#16a085'
+			},
+			v: {
+				sound: new Howl({
+		  		urls: ['sounds/veil.mp3']
+				}),
+				color: '#27ae60'
+			},
+			b: {
+				sound: new Howl({
+		  		urls: ['sounds/wipe.mp3']
+				}),
+				color: '#2980b9'
+			},
+			n: {
+				sound: new Howl({
+					urls: ['sounds/zig-zag.mp3']
+				}),
+				color: '#8e44ad'
+			},
+			m: {
+				sound: new Howl({
+		  		urls: ['sounds/moon.mp3']
+				}),
+				color: '#2c3e50'
+			}
+		}
 		var maxPoint = new Point(window.innerWidth, window.innerHeight);
 		var rect = new Rectangle(new Point(0,0), maxPoint);
 		var side = 0;
 		var lines =[];
+		var dance =0;
 		function onKeyDown(event) {
-			var start = Math.random();
-			var dest = Math.random();
-			if(side===0 ){
-				var beginPoint= new Point(0, start*window.innerHeight);
-				var finalPoint= new Point(window.innerWidth, dest*window.innerHeight);
-			} else {
-				var beginPoint= new Point(start*window.innerWidth, 0);
-				var finalPoint= new Point(dest*window.innerWidth, window.innerHeight);
-			}
-		
-			var myPath = new Path();
-			myPath.strokeColor='crimson';
-			myPath.strokeWidth='5';
-			myPath.strokeCap='round';
+			if(keyData[event.key]){
+				var start = Math.random();
+				var dest = Math.random();
+				var myPath = new Path();
+				myPath.strokeColor= keyData[event.key].color;
+				myPath.strokeWidth='5';
+				myPath.strokeCap='round';
+				if(dance%4===0 || dance%4===2){
+					var beginPoint= new Point(0, start*window.innerHeight);
+					var finalPoint= new Point(window.innerWidth, dest*window.innerHeight);
+				} else {
+					var beginPoint= new Point(start*window.innerWidth, 0);
+					var finalPoint= new Point(dest*window.innerWidth, window.innerHeight);
+				}
 			
-			lines.push({
-				source: beginPoint,
-				destination: finalPoint,
-				direction: (finalPoint - beginPoint).normalize(),
-				path: myPath,
-				nextPoint: beginPoint
-			});
-			//myPath.add(lines[lines.length-1].source, lines[lines.length-1].destination);
+
+				if(dance%4===0 || dance%4===1){
+					lines.push({
+						source: beginPoint,
+						destination: finalPoint,
+						direction: (finalPoint - beginPoint).normalize(),
+						path: myPath,
+						nextPoint: beginPoint
+					});
+				} else {
+					lines.push({
+						source: finalPoint,
+						destination: beginPoint,
+						direction: (beginPoint - finalPoint).normalize(),
+						path: myPath,
+						nextPoint: finalPoint
+					});
+				}
+				keyData[event.key].sound.play();
+				//myPath.add(lines[lines.length-1].source, lines[lines.length-1].destination);
+				dance+=1;
+			}
+
 		}
 		function onFrame(event) {
 			for(var i=0;i< lines.length;i++){
