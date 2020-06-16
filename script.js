@@ -2,9 +2,12 @@ var maxPoint = new Point(window.innerWidth, window.innerHeight);
 var rect = new Rectangle(new Point(0,0), maxPoint);
 var side = 0;
 var lines =[];
+
+// Function that triggers when key is pressed.
 function onKeyDown(event) {
     var start = Math.random();
     var dest = Math.random();
+    //
     if(side===0 ){
         var beginPoint= new Point(0, start*window.innerHeight);
         var finalPoint= new Point(window.innerWidth, dest*window.innerHeight);
@@ -27,6 +30,8 @@ function onKeyDown(event) {
     });
     myPath.add(lines[lines.length-1].source, lines[lines.length-1].destination);
 }
+
+// function that lets that animation happen 
 function onFrame(event) {
     for(var i=0;i< lines.length;i++){
         
